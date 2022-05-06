@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject starPrefab;
     [SerializeField] private InputHandler input;
+    [SerializeField] private float speed;
+    
     float jumpLockout;
     float jumpLock = 0.2f;
 
