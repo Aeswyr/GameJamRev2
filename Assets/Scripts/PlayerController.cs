@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Rigidbody2D rbody;
     [SerializeField] private Animator animator;
+    [SerializeField] private GameObject starPrefab;
     float jumpLockout;
     float jumpLock = 0.2f;
     [SerializeField] private float speed;
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour
 
     void Update() {
         Jump();
+        Action();
     }
 
     private void Move() {
@@ -47,6 +49,14 @@ public class PlayerController : MonoBehaviour
             jumpLockout = Time.time + jumpLock;
             animator.SetBool("grounded", grounded && Time.time > jumpLockout);
             animator.SetTrigger("jump");
+        }
+    }
+
+    private void Action() {
+        if (Input.GetKeyDown(KeyCode.Mouse0)) {
+            var obj = Instantiate(starPrefab, transform.position, Quaternion.identity);
+            obj.GetComponent<SpriteRenderer>().flipX = sprite.flipX;
+
         }
     }
 
