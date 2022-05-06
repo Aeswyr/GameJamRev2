@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] SpriteRenderer sprite;
     // Start is called before the first frame update
     void Start()
     {
@@ -11,7 +12,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void FixedUpdate() {
-        MoveLeft();
+        Move();
     }
 
     // Update is called once per frame
@@ -20,9 +21,18 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    private void MoveLeft() {
+    private void Move() {
         Vector3 pos = transform.position;
-        pos += new Vector3(-0.05f, 0, 0);
+        
+        if (Input.GetKey(KeyCode.D)) {
+            pos += new Vector3(0.1f, 0, 0);
+            sprite.flipX = false;
+        }
+        if (Input.GetKey(KeyCode.A)) {
+            pos += new Vector3(-0.1f, 0, 0); 
+            sprite.flipX = true;
+        }
+       
         transform.position = pos;
     }
 }
