@@ -8,42 +8,35 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody2D rbody;
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject starPrefab;
+    [SerializeField] private InputHandler input;
     float jumpLockout;
     float jumpLock = 0.2f;
     [SerializeField] private float speed;
 
     private bool grounded = false;
-    int jumps = 1;
+    int jumps = 2;
     void FixedUpdate() {
         CheckGrounded();
         Move();
-    }
-
-    void Update() {
         Jump();
         Action();
     }
 
     private void Move() {
-        rbody.velocity = rbody.velocity.y * Vector2.up;
+        rbody.velocity = new Vector2(input.dir.x * speed, rbody.velocity.y);
 
-        bool running = false;
-        if (Input.GetKey(KeyCode.D)) {
-            rbody.velocity = new Vector2(speed, rbody.velocity.y);
+        bool running = input.dir.x != 0;
+        
+        if (input.dir.x > 0)
             sprite.flipX = false;
-            running = true;
-        }
-        if (Input.GetKey(KeyCode.A)) {
-            rbody.velocity = new Vector2(-speed, rbody.velocity.y); 
+        if (input.dir.x < 0)
             sprite.flipX = true;
-            running = true;
-        }
 
         animator.SetBool("running", running);
     }
 
     private void Jump() {
-        if (Input.GetKeyDown(KeyCode.Space) && (grounded || jumps > 0)) {
+        if (input.jump.pressed && (grounded || jumps > 0)) {
             rbody.velocity = new Vector2(rbody.velocity.x, 30);
             jumps--;
             jumpLockout = Time.time + jumpLock;
@@ -53,7 +46,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Action() {
-        if (Input.GetKeyDown(KeyCode.Mouse0)) {
+        if (input.primary.pressed) {
             var obj = Instantiate(starPrefab, transform.position, Quaternion.identity);
             obj.GetComponent<SpriteRenderer>().flipX = sprite.flipX;
 
@@ -64,7 +57,7 @@ public class PlayerController : MonoBehaviour
         bool wasGrounded = grounded;
         grounded = Physics2D.Raycast((Vector2)transform.position - new Vector2(0, 1.5f), Vector2.down, 0.1f, LayerMask.GetMask("World"));
         if (grounded)
-            jumps = 1;
+            jumps = 2;
         if (grounded && !wasGrounded)
             animator.SetTrigger("land");
         animator.SetBool("grounded", grounded && Time.time > jumpLockout);
