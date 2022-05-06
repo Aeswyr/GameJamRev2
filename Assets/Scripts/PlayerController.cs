@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private InputHandler input;
     float jumpLockout;
     float jumpLock = 0.2f;
-    [SerializeField] private float speed;
 
     private bool grounded = false;
     int jumps = 2;
