@@ -237,7 +237,12 @@ MonoBehaviour:
   animator: {fileID: 1958409290018242679}
   starPrefab: {fileID: 1945682724927796221, guid: 53db7fa323755eb40b5bcb6e0229113c, type: 3}
   input: {fileID: 2584155246088734127}
-  speed: 12
+  walkSpeed: 12
+  dashSpeed: 20
+  airdashSpeed: 50
+  startAirDashTime: 0.1
+  airDashTime: 0
+  gravity: 10
 --- !u!114 &7465744978495951963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,6 +316,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 756afccb-9de2-44de-809b-1bfaf7a1acf6
     m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2584155246088734127}
+        m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
+        m_MethodName: DashMod
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: a298b0a3-503b-4a55-b358-f109dac1a085
+    m_ActionName: Player/DashMod[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2584155246088734127}
+        m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
+        m_MethodName: AirDashMod
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0f5d01bc-7791-492d-b626-0b8f08aebcd8
+    m_ActionName: Player/AirDashMod[/Keyboard/leftShift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
